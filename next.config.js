@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    typedRoutes: true
-  }
+  // typedRoutes OFF so we can pass dynamic string hrefs to <Link/>
+  experimental: {}
 };
+
 module.exports = nextConfig;
+
