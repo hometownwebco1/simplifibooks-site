@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="60" viewBox="0 0 220 60">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+  <rect rx="10" ry="10" width="58" height="58" x="1" y="1" fill="url(#g)"/>
+  <path d="M20 38 L20 20 L38 20" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="38" cy="20" r="3" fill="#fff"/>
+  <text x="70" y="38" font-family="Inter,Arial,Helvetica,sans-serif" font-size="26" font-weight="700" fill="#111827">SimplifiBooks</text>
+</svg>
