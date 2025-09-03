@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-
   const close = () => setOpen(false);
 
   return (
@@ -29,6 +28,15 @@ export default function Header() {
             <Link href="/services" className="text-sm text-gray-700 hover:underline">
               Services
             </Link>
+            <a
+              href="https://www.youtube.com/@SimplifiBooks"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-gray-700 hover:underline"
+              aria-label="SimplifiBooks on YouTube"
+            >
+              YouTube
+            </a>
             <a
               href="https://www.raleighbookkeeping.com"
               target="_blank"
@@ -80,6 +88,16 @@ export default function Header() {
               >
                 Services
               </Link>
+              <a
+                href="https://www.youtube.com/@SimplifiBooks"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded px-2 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                onClick={close}
+                aria-label="SimplifiBooks on YouTube"
+              >
+                YouTube
+              </a>
               <a
                 href="https://www.raleighbookkeeping.com"
                 target="_blank"
