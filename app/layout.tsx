@@ -1,5 +1,7 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import Header from "@/components/Header";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -8,7 +10,8 @@ export const metadata: Metadata = {
     default: "SimplifiBooks — Monthly Bookkeeping Confidence Checks",
     template: "%s | SimplifiBooks",
   },
-  description: "Do your own books? We’ll make sure you did them right. Monthly bookkeeping double-checks with a simple feedback report.",
+  description:
+    "Do your own books? We’ll make sure you did them right. Monthly bookkeeping double-checks with a simple feedback report.",
   openGraph: {
     title: "SimplifiBooks — Monthly Bookkeeping Confidence Checks",
     description: "Do your own books? We’ll make sure you did them right.",
@@ -24,25 +27,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <header className="border-b border-gray-200">
-          <div className="container flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <img src="/logo.svg" alt="SimplifiBooks logo" className="h-8 w-auto" />
-            </Link>
-            <nav className="flex items-center gap-6 text-sm">
-              <Link href="/blog" className="hover:underline">Blog</Link>
-              <a href="https://www.raleighbookkeeping.com" target="_blank" rel="noopener noreferrer" className="hover:underline">Raleigh Bookkeeping</a>
-            </nav>
-          </div>
-        </header>
+        <Header />
         <main>{children}</main>
         <footer className="mt-24 border-t border-gray-200">
-          <div className="container py-10 text-sm text-gray-600">
+          <div className="container mx-auto max-w-6xl px-4 py-10 text-sm text-gray-600">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <p>© {new Date().getFullYear()} SimplifiBooks. All rights reserved.</p>
               <div className="flex items-center gap-6">
                 <Link href="/blog" className="hover:underline">Blog</Link>
-                <a href="https://www.raleighbookkeeping.com" target="_blank" rel="noopener noreferrer" className="hover:underline">Powered by Raleigh Bookkeeping</a>
+                <a href="https://www.raleighbookkeeping.com" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  Powered by Raleigh Bookkeeping
+                </a>
               </div>
             </div>
             <p className="mt-4 text-xs">
