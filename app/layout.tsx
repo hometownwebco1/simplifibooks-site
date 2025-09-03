@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Link from "next/link";
 import Script from "next/script";
+import { Suspense } from "react";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Header />
         <main>{children}</main>
+
         <footer className="mt-24 border-t border-gray-200">
           <div className="container mx-auto max-w-6xl px-4 py-10 text-sm text-gray-600">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -69,7 +71,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
 
         {/* Fires page_view on client-side route changes */}
-        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
       </body>
     </html>
   );
