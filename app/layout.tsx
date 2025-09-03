@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Link from "next/link";
+import Script from "next/script";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.simplifibooks.com"),
@@ -27,6 +29,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        {/* GA4 base tag */}
+        <Script
+          id="ga4-src"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+          `}
+        </Script>
+
         <Header />
         <main>{children}</main>
         <footer className="mt-24 border-t border-gray-200">
@@ -35,7 +52,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p>© {new Date().getFullYear()} SimplifiBooks. All rights reserved.</p>
               <div className="flex items-center gap-6">
                 <Link href="/blog" className="hover:underline">Blog</Link>
-                <a href="https://www.raleighbookkeeping.com" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                <a
+                  href="https://www.raleighbookkeeping.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
                   Powered by Raleigh Bookkeeping
                 </a>
               </div>
@@ -45,6 +67,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </p>
           </div>
         </footer>
+
+        {/* Fires page_view on client-side route changes */}
+        <GoogleAnalytics />
       </body>
     </html>
   );
