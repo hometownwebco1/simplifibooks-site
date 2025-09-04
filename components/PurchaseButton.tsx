@@ -1,4 +1,3 @@
-// components/PurchaseButton.tsx
 "use client";
 
 import { useState } from "react";
@@ -7,16 +6,17 @@ import { Loader2 } from "lucide-react";
 interface Props {
   label: string;
   productKey: "qbo-setup" | "onboarding-review";
-  icon?: any;
 }
 
-export default function PurchaseButton({ label, productKey, icon: Icon }: Props) {
+export default function PurchaseButton({ label, productKey }: Props) {
   const [loading, setLoading] = useState(false);
 
   const onClick = async () => {
     try {
       setLoading(true);
+      // Debug log to help if anything fails in prod
       console.log("[PurchaseButton] starting checkout for", productKey);
+
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ export default function PurchaseButton({ label, productKey, icon: Icon }: Props)
 
       const text = await res.text();
       let data: any = null;
-      try { data = JSON.parse(text); } catch { /* keep raw text */ }
+      try { data = JSON.parse(text); } catch { /* non-JSON */ }
 
       console.log("[PurchaseButton] response", res.status, data || text);
 
@@ -34,6 +34,7 @@ export default function PurchaseButton({ label, productKey, icon: Icon }: Props)
         alert(`Checkout failed: ${msg}`);
         return;
       }
+
       if (data?.url) {
         window.location.href = data.url as string;
       } else {
@@ -53,7 +54,7 @@ export default function PurchaseButton({ label, productKey, icon: Icon }: Props)
       disabled={loading}
       className="inline-flex items-center gap-2 rounded-xl bg-black px-5 py-3 text-white font-semibold hover:opacity-90 disabled:opacity-60"
     >
-      {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : Icon ? <Icon className="h-5 w-5" /> : null}
+      {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
       {loading ? "Starting checkout…" : label}
     </button>
   );
