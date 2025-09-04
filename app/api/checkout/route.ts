@@ -8,7 +8,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL as string;
 const priceSetup = process.env.PRICE_ID_QBO_SETUP as string;       // $297 QuickBooks Set Up
 const priceOnboarding = process.env.PRICE_ID_ONBOARDING as string; // $149 New Customer Onboarding Review
 
-const stripe = new Stripe(stripeSecret, { apiVersion: "2024-06-20" });
+const stripe = new Stripe(stripeSecret);
 
 export async function POST(req: NextRequest) {
   try {
