@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       line_items: [{ price: priceId, quantity: 1 }],
       allow_promotion_codes: true,
-      success_url: `${siteUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`, // ✅ updated
+      success_url: `${siteUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`, // ✅ thank-you redirect
       cancel_url: `${siteUrl}/services?canceled=1`,
       metadata: { productKey, source: "services_page" },
     });
@@ -44,4 +44,16 @@ export async function POST(req: NextRequest) {
     console.error("checkout error", err);
     return NextResponse.json({ error: "checkout_failed" }, { status: 500 });
   }
+}
+
+// Optional health check
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    hasSecret: !!process.env.STRIPE_SECRET_KEY,
+    hasSiteUrl: !!process.env.NEXT_PUBLIC_SITE_URL,
+    hasSetupPrice: !!process.env.PRICE_ID_QBO_SETUP,
+    hasOnboardingPrice: !!process.env.PRICE_ID_ONBOARDING,
+    redirect: `${process.env.NEXT_PUBLIC_SITE_URL || ""}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+  });
 }
