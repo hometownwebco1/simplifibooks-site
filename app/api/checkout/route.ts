@@ -2,39 +2,39 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripeSecret = process.env.STRIPE_SECRET_KEY as string;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL as string;
+// Read ENV at module load (safe), but DO NOT construct Stripe here
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.simplifibooks.com";
+const priceSetup = process.env.PRICE_ID_QBO_SETUP;       // $297 QuickBooks Set Up
+const priceOnboarding = process.env.PRICE_ID_ONBOARDING; // $149 New Customer Onboarding Review
 
-const priceSetup = process.env.PRICE_ID_QBO_SETUP as string;       // $297 QuickBooks Set Up
-const priceOnboarding = process.env.PRICE_ID_ONBOARDING as string; // $149 New Customer Onboarding Review
-
-const stripe = new Stripe(stripeSecret);
+function getStripe() {
+  const secret = process.env.STRIPE_SECRET_KEY;
+  if (!secret) {
+    // Don’t construct Stripe without a key; fail clearly at request time
+    throw new Error("STRIPE_SECRET_KEY is not set");
+  }
+  return new Stripe(secret);
+}
 
 export async function POST(req: NextRequest) {
   try {
     const { productKey } = await req.json();
 
     let priceId: string | undefined;
-    switch (productKey) {
-      case "qbo-setup":
-        priceId = priceSetup;
-        break;
-      case "onboarding-review":
-        priceId = priceOnboarding;
-        break;
-      default:
-        return NextResponse.json({ error: "Unsupported product" }, { status: 400 });
-    }
+    if (productKey === "qbo-setup") priceId = priceSetup || undefined;
+    if (productKey === "onboarding-review") priceId = priceOnboarding || undefined;
 
     if (!priceId) {
       return NextResponse.json({ error: "Missing price for product" }, { status: 500 });
     }
 
+    const stripe = getStripe(); // ✅ Construct inside handler
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: [{ price: priceId, quantity: 1 }],
       allow_promotion_codes: true,
-      success_url: `${siteUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`, // ✅ thank-you redirect
+      success_url: `${siteUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/services?canceled=1`,
       metadata: { productKey, source: "services_page" },
     });
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Optional health check
+// Optional health check (no Stripe call here, so it’s safe at build time)
 export async function GET() {
   return NextResponse.json({
     ok: true,
@@ -54,6 +54,6 @@ export async function GET() {
     hasSiteUrl: !!process.env.NEXT_PUBLIC_SITE_URL,
     hasSetupPrice: !!process.env.PRICE_ID_QBO_SETUP,
     hasOnboardingPrice: !!process.env.PRICE_ID_ONBOARDING,
-    redirect: `${process.env.NEXT_PUBLIC_SITE_URL || ""}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+    redirect: `${siteUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
   });
 }
