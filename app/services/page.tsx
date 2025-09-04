@@ -31,9 +31,10 @@ export default function ServicesPage() {
               Get set up right. Keep it right.
             </h1>
             <p className="mt-5 text-lg text-gray-700 max-w-2xl">
-              Buy your <strong>QuickBooks Setup &amp; Onboarding Review</strong> online now. Then, once
-              approved, enroll in the <strong>SimplifiBooks Confidence Check</strong> — a monthly
-              double-check of your books for ongoing peace of mind.
+              Buy your <strong>QuickBooks Setup &amp; Onboarding Review</strong> online now. Then,
+              once approved, enroll in the{" "}
+              <strong>SimplifiBooks Confidence Check</strong> — a monthly double-check of your books
+              for ongoing peace of mind.
             </p>
             <ul className="mt-6 space-y-3 text-gray-700">
               <li className="flex items-start gap-2">
