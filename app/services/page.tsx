@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Suspense } from "react";
-import { CheckCircle2, Shield, Clock } from "lucide-react"; // ⬅️ no CreditCard
+import { CheckCircle2, Shield, Clock } from "lucide-react";
 import PurchaseButton from "@/components/PurchaseButton";
 import LeadForm from "@/components/LeadForm";
 
@@ -50,7 +50,13 @@ export default function ServicesPage() {
             </ul>
           </div>
           <div className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-lg">
-            <Image src="/images/services-hero.jpg" alt="SimplifiBooks services" fill className="object-cover" />
+            <Image
+              src="/logo.svg"                 // changed to existing asset
+              alt="SimplifiBooks logo"
+              fill
+              className="object-contain bg-white" // keep aspect clean
+              priority
+            />
           </div>
         </div>
       </section>
