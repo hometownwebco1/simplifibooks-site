@@ -1,6 +1,5 @@
 // components/Footer.tsx
 import Link from "next/link";
-import { Instagram, Facebook, Youtube } from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -52,36 +51,37 @@ export default function Footer() {
                   hello@simplifibooks.com
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/thesimplifibooks"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.facebook.com/profile.php?id=61575052181543"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/@SimplifiBooks"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  YouTube
+                </a>
+              </li>
             </ul>
-            <div className="mt-4 flex gap-4">
-              <a
-                href="https://www.instagram.com/thesimplifibooks"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="SimplifiBooks on Instagram"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a
-                href="https://www.facebook.com/profile.php?id=61575052181543"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="SimplifiBooks on Facebook"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="https://www.youtube.com/@SimplifiBooks"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="SimplifiBooks on YouTube"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <Youtube className="h-5 w-5" />
-              </a>
-            </div>
           </div>
         </div>
 
