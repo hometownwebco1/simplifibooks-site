@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       line_items: [{ price: priceId, quantity: 1 }],
       allow_promotion_codes: true,
-      success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${siteUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`, // ✅ updated
       cancel_url: `${siteUrl}/services?canceled=1`,
       metadata: { productKey, source: "services_page" },
     });
